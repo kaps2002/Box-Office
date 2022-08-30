@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Actorgrid from '../components/actor/Actorgrid';
 import MainPageLayout from "../components/MainPageLayout"
 import ShowGrid from '../components/show/ShowGrid';
@@ -9,6 +9,7 @@ const Home=()=>{
     const[results,setresults]=useState(null);
     const[searchOption,setSearchOption]=useState('shows');
     const isShowsSearch = searchOption ==="shows"
+    
     const onSearch=()=>{
       //  https://api.tvmaze.com/search/shows?q=men
       apiGet(`/search/${searchOption}?q=${input}`).then(result=>{
