@@ -1,11 +1,11 @@
 import React from 'react';
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useCallback } from 'react';
 import Actorgrid from '../components/actor/Actorgrid';
 import CustomRadio from '../components/CustomRadio';
 import MainPageLayout from "../components/MainPageLayout"
 import ShowGrid from '../components/show/ShowGrid';
 import {apiGet} from "../Misc/config"
-import { useLastQuery } from '../Misc/custom-hooks';
+import { useLastQuery, useWhyDidYouUpdate } from '../Misc/custom-hooks';
 import { RadioInputsWrapper, SearchButtonWrapper, SearchInput } from './Home.styled';
 const Home=()=>{
     const[input,setInput]=useLastQuery('');
@@ -19,17 +19,17 @@ const Home=()=>{
         setresults(result)
       })
     }
-    const onInputChange=(ev)=>{
+    const onInputChange=useCallback(ev=>{
         setInput(ev.target.value);
-    }
+    },[setInput])
     const OnKeyDown=ev=>{
         if(ev.keyCode === 13){
             onSearch()
         }
     }
-    const onRadioChange=(ev)=>{
+    const onRadioChange= useCallback(ev=>{
         setSearchOption(ev.target.value)
-    }
+    },[])
     console.log(searchOption)
     const renderResults=()=>{
         if (results && results.length === 0){
@@ -44,6 +44,8 @@ const Home=()=>{
         }
         return null;
     }
+    useWhyDidYouUpdate('home',{onInputChange, OnKeyDown})
+
     return (
         <MainPageLayout>
             <SearchInput 
