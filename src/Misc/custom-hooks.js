@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import {useReducer} from 'react'
 function showsReducer(prevState,action){
     switch(action.type){
@@ -27,7 +27,7 @@ export function useShows(key='shows'){
 }
 export function useLastQuery(key='lastQuery'){
     const[input,setInput]=useState(()=>{
-        const persisted=localStorage.getItem(key);
+        const persisted=sessionStorage.getItem(key);
         return persisted ? JSON.parse(persisted):"";
     });
     const setPersistedInput =(newState)=>{
